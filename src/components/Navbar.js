@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="h-headerHeight z-50 text-textColor bg-headerColor shadow-sm  flex items-center sticky top-0">
+    <header className="h-[74px] text-textColor bg-headerColor shadow-sm  flex items-center ">
       <nav className="sm:px-10 px-4 flex w-full h-full items-center justify-between">
         <Link to="/">
           {" "}
@@ -41,7 +41,7 @@ const Navbar = () => {
         >
           {token && (
             <>
-             <Link to="/available-spots">
+              <Link to="/available-spots">
                 <li
                   className={` ${
                     pathName === "/available-spots" ? "font-semibold " : ""
@@ -111,11 +111,18 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <Link to="/signup">
-              <li className="w-24 text-center bg-btnColor font-semibold px-4 py-2 rounded-sm cursor-pointer hover:text-slate-300">
-                SignUp
-              </li>
-            </Link>
+            <>
+              <Link to="/login">
+                <li className=" text-center bg-btnColor font-semibold px-6 py-2 rounded-sm cursor-pointer hover:text-slate-300">
+                  Sign In
+                </li>
+              </Link>
+              <Link to="/signup">
+                <li className=" text-center bg-btnColor font-semibold px-6 py-2 rounded-sm cursor-pointer hover:text-slate-300">
+                  Sign Up
+                </li>
+              </Link>
+            </>
           )}
         </ul>
         <span

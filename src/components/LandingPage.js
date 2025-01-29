@@ -39,12 +39,12 @@ const LandingPage = () => {
         >
           {token ? (
             <>
-              <Link to="/create-note">
+              <Link to="/book-parking">
                 <Buttons className="sm:w-52 w-44 bg-blue-600 font-semibold hover:bg-blue-700 hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-lg">
                   Book Parking
                 </Buttons>
               </Link>
-              <Link to="/my-reservations">
+              <Link to="/my-bookings">
                 <Buttons className="sm:w-52 w-44 bg-blue-600 font-semibold hover:bg-blue-700 hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-lg">
                   My Reservations
                 </Buttons>
