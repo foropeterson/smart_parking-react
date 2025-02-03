@@ -38,12 +38,12 @@ const State = () => {
         <div className="flex md:flex-row flex-col md:gap-0 gap-16 justify-between">
           <ul className="list-disc sm:px-5 ps-10 text-slate-700 flex flex-col gap-5 flex-1 overflow-hidden">
             <li>Trusted by thousands of users worldwide.</li>
-            <li>Experience reliable access to your notes anytime, anywhere.</li>
+            <li>Experience reliable access to our parking anytime, anywhere.</li>
             <li>
-              Quickly access your notes with our optimized search feature.
+              Quickly access our available with our optimized search feature.
             </li>
             <li>
-              Quickly access your notes with our optimized search feature.
+              Quickly access the nearest parkingSpot with our optimized search feature.
             </li>
             <li>10,000+ trusted users</li>
             <li>99.9% uptime</li>

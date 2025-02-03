@@ -70,6 +70,8 @@ const AdminAuditLogs = () => {
     return <div className="text-center text-red-500 py-10">{error}</div>;
   }
 
+  const totalPages = Math.ceil(filteredLogs.length / logsPerPage);
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold text-center mb-6">Audit Logs</h1>
@@ -124,21 +126,18 @@ const AdminAuditLogs = () => {
           </thead>
           <tbody>
             {currentLogs.map((log) => (
-              <tr key={log.id} className="text-center border-b hover:bg-gray-100">
+              <tr
+                key={log.id}
+                className="text-center border-b hover:bg-gray-100"
+              >
                 <td className="px-4 py-2 border">{log.id}</td>
                 <td className="px-4 py-2 border">{log.action}</td>
                 <td className="px-4 py-2 border">{log.username}</td>
                 <td className="px-4 py-2 border flex items-center justify-center gap-2">
                   <FaCalendarAlt className="text-gray-600" />
-                  {new Date(log.changeTimestamp).toLocaleString("en-US", {
-                    month: "long",
-                    day: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  })}
+                  {log.changeTimestamp}
                 </td>
+
                 <td className="px-4 py-2 border">{log.details}</td>
               </tr>
             ))}
@@ -148,19 +147,36 @@ const AdminAuditLogs = () => {
 
       {/* Pagination Section */}
       <div className="flex justify-center items-center mt-4">
-        {Array.from({ length: Math.ceil(filteredLogs.length / logsPerPage) }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            className={`mx-1 px-3 py-1 rounded ${
-              currentPage === page
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
-            onClick={() => paginate(page)}
-          >
-            {page}
-          </button>
-        ))}
+        {/* Previous Button */}
+        <button
+          className={`mx-1 px-3 py-1 rounded ${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+          onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
+        {/* Page Info */}
+        <span className="mx-2 text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        {/* Next Button */}
+        <button
+          className={`mx-1 px-3 py-1 rounded ${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+          onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

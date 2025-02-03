@@ -16,13 +16,27 @@ const AllBookings = () => {
   const navigate = useNavigate();
 
   // Format datetime
-  const formatDateTime = (datetime) => {
-    const dateObj = new Date(datetime);
-    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-    const time = dateObj.toLocaleTimeString('en-US', options);
-    const date = dateObj.toISOString().split('T')[0]; // yyyy-mm-dd format
-    return { time, date };
-  };
+ const formatDateTime = (datetime) => {
+   // Create a new Date object using the array of [year, month, day, hours, minutes]
+   const dateObj = new Date(
+     datetime[0],
+     datetime[1] - 1,
+     datetime[2],
+     datetime[3],
+     datetime[4]
+   );
+
+   // Check if the date object is valid
+   if (isNaN(dateObj.getTime())) {
+     return { time: "Invalid Date", date: "Invalid Date" };
+   }
+
+   const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+   const time = dateObj.toLocaleTimeString("en-US", options);
+   const date = dateObj.toISOString().split("T")[0]; // yyyy-mm-dd format
+
+   return { time, date };
+ };
 
   // Process bookings data
   const processBookings = (data) => {

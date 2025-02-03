@@ -36,6 +36,7 @@
     "react-scripts": "^5.0.1",
     "secure-notes-react": "file:",
     "swiper": "^11.1.4",
+    "url": "^0.11.4",
     "web-vitals": "^2.1.4",
     "webpack": "^5.97.1"
   },

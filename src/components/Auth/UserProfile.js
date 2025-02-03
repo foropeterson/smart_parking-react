@@ -19,7 +19,7 @@ import Errors from "../Errors";
 const UserProfile = () => {
   // Access the currentUser and token hook using the useMyContext custom hook from the ContextProvider
   const { currentUser, token } = useMyContext();
-  //set the loggin session from the token
+  //set the login session from the token
   const [loginSession, setLoginSession] = useState(null);
 
   const [credentialExpireDate, setCredentialExpireDate] = useState(null);
@@ -59,7 +59,7 @@ const UserProfile = () => {
     mode: "onTouched",
   });
 
-  //fetching the 2fa sttaus
+  //fetching the 2fa status
 
   useEffect(() => {
     setPageLoader(true);
@@ -207,9 +207,9 @@ const UserProfile = () => {
       });
 
       //fetchUser();
-      toast.success("Update Account Expirey Status");
+      toast.success("Update Account Expiry Status");
     } catch (error) {
-      toast.error("Update expirey status failed");
+      toast.error("Update expiry status failed");
     } finally {
       setLoading(false);
     }

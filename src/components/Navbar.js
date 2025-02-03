@@ -68,6 +68,15 @@ const Navbar = () => {
                   Book Parking
                 </li>
               </Link>
+              <Link to="/my-fines">
+                <li
+                  className={` py-2 cursor-pointer  hover:text-slate-300 ${
+                    pathName === "/my-fines" ? "font-semibold " : ""
+                  } `}
+                >
+                  My Fines
+                </li>
+              </Link>
             </>
           )}
 

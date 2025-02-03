@@ -27,9 +27,8 @@ const AuditLogsDetails = () => {
       console.log("API Response:", data); // Log the response to inspect the structure
 
       if (data && data.body) {
-        
-        setAuditLogs(data.body); 
-        console.log("setAuditLogs",setAuditLogs);
+        setAuditLogs(data.body);
+        console.log("setAuditLogs", setAuditLogs);
         // Ensure we're setting data.body properly
       } else {
         setAuditLogs(null); // If no body, set to null

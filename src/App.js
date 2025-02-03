@@ -23,6 +23,7 @@ import Payment from "./components/Bookings/Payment";
 import PaymentSuccessful from "./components/Bookings/PaymentSuccessful";
 import Footer from "./components/Footer/Footer";
 import MpesaCheckout from "./components/Bookings/MpesaCheckout";
+import UserFines from "./components/Bookings/UserFines";
 
 const App = () => {
   return (
@@ -38,16 +39,25 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/available-spots" element={<AvailableSpots />} />
-        <Route path ="/mpesa-checkout" element ={<MpesaCheckout /> } />
-    
-        <Route path="/book-parking"
+        <Route path="/mpesa-checkout" element={<MpesaCheckout />} />
+
+        <Route
+          path="/book-parking"
           element={
             <ProtectedRoute>
               <BookParking />
             </ProtectedRoute>
           }
         />
-         <Route
+        <Route
+          path="/my-fines"
+          element={
+            <ProtectedRoute>
+              <UserFines />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/make-payment"
           element={
             <ProtectedRoute>
@@ -55,7 +65,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-         <Route
+        <Route
           path="/payment-success"
           element={
             <ProtectedRoute>
@@ -79,7 +89,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-         <Route
+        <Route
           path="/available-spots"
           element={
             <ProtectedRoute>

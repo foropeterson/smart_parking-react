@@ -32,13 +32,28 @@ const MyBookings = () => {
   };
 
   // Format datetime
-  const formatDateTime = (datetime) => {
-    const dateObj = new Date(datetime);
-    const options = { hour: '2-digit', minute: '2-digit', hour12: true };
-    const time = dateObj.toLocaleTimeString('en-US', options);
-    const date = dateObj.toISOString().split('T')[0]; // yyyy-mm-dd format
-    return { time, date };
-  };
+const formatDateTime = (datetime) => {
+  // Create a new Date object using the array of [year, month, day, hours, minutes]
+  const dateObj = new Date(
+    datetime[0],
+    datetime[1] - 1,
+    datetime[2],
+    datetime[3],
+    datetime[4]
+  );
+
+  // Check if the date object is valid
+  if (isNaN(dateObj.getTime())) {
+    return { time: "Invalid Date", date: "Invalid Date" };
+  }
+
+  const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+  const time = dateObj.toLocaleTimeString("en-US", options);
+  const date = dateObj.toISOString().split("T")[0]; // yyyy-mm-dd format
+
+  return { time, date };
+};
+
 
   // Process bookings data
   const processBookings = (data) => {
@@ -64,8 +79,7 @@ const MyBookings = () => {
     if (!userId) return;
     try {
       setLoading(true);
-      const response = await api.get(
-        `/bookings/my-bookings?userId=${userId}&page=${page}&size=${size}`
+      const response = await api.get(`/bookings/my-bookings?userId=${userId}&page=${page}&size=${size}`
       );
       if (response.data.responseCode === '200') {
         const processedData = processBookings(response.data.body);
@@ -80,6 +94,7 @@ const MyBookings = () => {
         setError(response.data.responseMessage || 'Error fetching bookings');
       }
     } catch (err) {
+      console.log(err)
       setError('Error fetching data');
     } finally {
       setLoading(false);
@@ -131,7 +146,7 @@ const MyBookings = () => {
     }));
   };
  // Updated View button in the renderActionButton function
- const renderActionButton = (paymentStatus, bookingId, amount, vehicleRegistration) => {
+ const renderActionButton = (bookingStatus,paymentStatus, bookingId, amount, vehicleRegistration) => {
   return (
     <div className="flex space-x-2">
       <button
@@ -140,7 +155,7 @@ const MyBookings = () => {
       >
         View
       </button>
-      {paymentStatus === 'PAID' && (
+      {paymentStatus === 'PAID' && bookingStatus === 'ACTIVE' &&(
         <button
           onClick={() => handleExitParking(bookingId)}
           className="px-4 py-2 bg-green-500 text-white rounded-md"
@@ -163,12 +178,12 @@ const handleExitParking = async (bookingId) => {
   try {
     const response = await api.put(`/bookings/exit/${bookingId}`);
     console.log("response",response)
-    if (response.status === 200 || response.status === 201) {
-      alert('Exit Parking successful!');
+    if (response.data.responseCode === 200) {
+      alert(response.data.responseMessage);
       // You can also refresh the bookings or update the state to reflect the changes
       fetchBookings(pagination.currentPage, pagination.pageSize); // Fetch updated bookings
     } else {
-      alert('Failed to exit parking. Please try again.');
+      alert(response.data.responseMessage || 'Failed to exit parking. Please try again.');
     }
   } catch (error) {
     console.error('Error exiting parking:', error);
@@ -250,7 +265,7 @@ const handleBookNow = () => {
                     <td className="py-2 px-4 text-sm text-gray-700 border-b">{booking.amount}</td>
                     <td className="py-2 px-4 text-sm text-gray-700 border-b">{booking.paymentStatus}</td>
                     <td className="py-2 px-4 text-sm text-gray-700 border-b">
-                    {renderActionButton(booking.paymentStatus, booking.bookingId,booking.amount,booking.vehicleRegistration)}
+                    {renderActionButton(booking.bookingStatus,booking.paymentStatus, booking.bookingId,booking.amount,booking.vehicleRegistration)}
                     </td>
                   </tr>
                 ))

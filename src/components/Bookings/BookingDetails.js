@@ -46,10 +46,25 @@ const BookingDetails = () => {
         alert("Invalid action");
     }
   };
+const formatTime = (datetimeArray) => {
+  // Convert the array [year, month, day, hour, minute] into a Date object
+  const dateObj = new Date(
+    datetimeArray[0],
+    datetimeArray[1] - 1,
+    datetimeArray[2],
+    datetimeArray[3],
+    datetimeArray[4]
+  );
 
+  // Use toLocaleTimeString to format the time (12-hour format with AM/PM)
+  const options = { hour: "2-digit", minute: "2-digit", hour12: true };
+  return dateObj.toLocaleTimeString("en-US", options);
+};
   return (
     <div className="p-8 max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Booking Details</h2>
+      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+        Booking Details
+      </h2>
       {loading ? (
         <div className="text-center text-gray-600">Loading...</div>
       ) : error ? (
@@ -62,35 +77,47 @@ const BookingDetails = () => {
               <span className="text-gray-600">{booking.bookingId}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Booked By (Email):</span>
+              <span className="font-semibold text-gray-700">
+                Booked By (Email):
+              </span>
               <span className="text-gray-600">{booking.user.email}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-700">Spot Number:</span>
-              <span className="text-gray-600">{booking.parkingSpot.spotId}</span>
+              <span className="text-gray-600">
+                {booking.parkingSpot.spotId}
+              </span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Spot Location:</span>
-              <span className="text-gray-600">{booking.parkingSpot.spotLocation}</span>
+              <span className="font-semibold text-gray-700">
+                Spot Location:
+              </span>
+              <span className="text-gray-600">
+                {booking.parkingSpot.spotLocation}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-700">Vehicle Type:</span>
               <span className="text-gray-600">{booking.vehicleType}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Vehicle Number:</span>
-              <span className="text-gray-600">{booking.vehicleRegistration}</span>
+              <span className="font-semibold text-gray-700">
+                Vehicle Number:
+              </span>
+              <span className="text-gray-600">
+                {booking.vehicleRegistration}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-700">Start Time:</span>
               <span className="text-gray-600">
-                {new Date(booking.startTime).toLocaleString()}
+                {formatTime(booking.startTime)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-700">End Time:</span>
               <span className="text-gray-600">
-                {new Date(booking.endTime).toLocaleString()}
+                {formatTime(booking.endTime)}
               </span>
             </div>
             <div className="flex justify-between">
@@ -98,17 +125,21 @@ const BookingDetails = () => {
               <span className="text-gray-600">{booking.amount}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Payment Status:</span>
+              <span className="font-semibold text-gray-700">
+                Payment Status:
+              </span>
               <span className="text-gray-600">{booking.paymentStatus}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Booking Status:</span>
+              <span className="font-semibold text-gray-700">
+                Booking Status:
+              </span>
               <span className="text-gray-600">{booking.bookingStatus}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-semibold text-gray-700">Booked At:</span>
               <span className="text-gray-600">
-                {new Date(booking.startTime).toLocaleDateString()}
+                {formatTime(booking.startTime)}
               </span>
             </div>
           </div>
@@ -128,7 +159,9 @@ const BookingDetails = () => {
             {booking.paymentStatus === "PENDING" && (
               <>
                 <button
-                  onClick={() => handleActionClick("PENDING", booking.bookingId)}
+                  onClick={() =>
+                    handleActionClick("PENDING", booking.bookingId)
+                  }
                   className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition"
                 >
                   Pay Now
@@ -144,7 +177,9 @@ const BookingDetails = () => {
             {booking.paymentStatus === "INITIATED" && (
               <>
                 <button
-                  onClick={() => handleActionClick("INITIATED", booking.bookingId)}
+                  onClick={() =>
+                    handleActionClick("INITIATED", booking.bookingId)
+                  }
                   className="px-6 py-3 bg-yellow-600 text-white font-medium rounded-md hover:bg-yellow-700 transition"
                 >
                   Complete Payment
