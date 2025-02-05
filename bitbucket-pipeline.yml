@@ -1,0 +1,16 @@
+pipelines:
+  branches:
+     main:
+      - step:
+          name: Build docker image (cached)
+          image: node:16.18.0-alpine3.16
+          caches:
+            - docker
+          script:
+            - export IMAGE_NAME=smart-parking
+            - export TAG=registry.hub.docker.com/petersonforo/${IMAGE_NAME}
+            - docker ps
+            - docker build . -f Docker-Cache -t ${TAG}
+            - docker save ${TAG} -o my-image.tar
+          artifacts:
+            - my-image.tar
